@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/studentDashboard.css" />
+  </head>
+  <body>
+    <div class="navbar" id="navbar">
+      <div class="head">
+        <a href="/dashboard"><h2>Student Dashboard</h2></a>
+      </div>
+      <div class="studentCta" id="studentCta">
+        <li><a href="">Settings</a></li>
+        <li>
+          <form action="/logout" method="post">
+            <button class="logout" type="submit">Log Out</button>
+          </form>
+        </li>
+        <li><a href="">Notifications</a></li>
+      </div>
+      <div class="navTrigger" id="navTrigger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="container">
+      <% if (data.length > 0 ) { %> <% const question = data[0]; %>
+      <!-- Display the first question on the current page -->
+      <div class="head">
+        <h2>
+          Choose the Correct Answer
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small
+            ><%= email %></small
+          >
+        </h2>
+      </div>
+      <div class="content">
+        <form action="/submit" method="post">
+          <input type="hidden" name="id" value="<%= question.id %>" />
+          <input type="hidden" name="email" value="<%= email %>" />
+          <ul class="question">
+            <h2><%= question.question %></h2>
+            <li>
+              <input
+                type="radio"
+                name="selectedOption"
+                id="option_a_"
+                value="option_a"
+              />
+              <label for="option_a"><%= question.option_a %></label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="selectedOption"
+                id="option_b_"
+                value="option_b"
+              />
+              <label for="option_b_"><%= question.option_b %></label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="selectedOption"
+                id="option_c_"
+                value="option_c"
+              />
+              <label for="option_c_"><%= question.option_c %></label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="selectedOption"
+                id="option_d_"
+                value="option_d"
+              />
+              <label for="option_d_"><%= question.option_d %></label>
+            </li>
+          </ul>
+          <div class="cta">
+            <% if (page > 1) { %>
+            <!-- Show Previous button if not on the first page -->
+            <a class="next" href="/dashboard?page=<%= page - 1 %>">Previous</a>
+            <% } %> <% if (page == 1) { %>
+            <!-- Show Previous button if not on the first page -->
+            <button type="submit" name="send" value="<%= page + 1 %>">
+              Next
+            </button>
+            <% } %>
+            <!-- Show Next button if not on the last page -->
+            <% if (data.length != page){ %>
+            <button type="submit" name="send" value="<%= page + 1 %>">
+              Next
+            </button>
+            <% } %>
+          </div>
+        </form>
+      </div>
+      <% } else { %>
+      <script>
+        window.location.replace('/result');
+      </script>
+      <% } %>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+        var page = `<%= page %>`; // Retrieve the current page number passed from the backend
+
+        prevBtn.addEventListener('click', function () {
+          page--; // Decrement the page number
+          location.href = '/dashboard?page=' + page; // Redirect to the previous page
+        });
+
+        nextBtn.addEventListener('click', function () {
+          page++; // Increment the page number
+          location.href = '/student_dashboard?page=' + page; // Redirect to the next page
+        });
+      });
+    </script>
+  </body>
+</html>

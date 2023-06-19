@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/studentDashboard.css" />
+  </head>
+  <body>
+    <div class="navbar" id="navbar">
+      <div class="head">
+        <a href="/dashboard"><h2>Student Dashboard</h2></a>
+      </div>
+      <div class="studentCta" id="studentCta">
+        <li><a href="">Settings</a></li>
+        <li><a href="">Progress</a></li>
+        <li><a href="">Notifications</a></li>
+      </div>
+      <div class="navTrigger" id="navTrigger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="head">
+        <h2>Your Assessment Result</h2>
+      </div>
+      <div class="content">
+        <% scores.forEach((score, index) => { %> <% if (score > 0 ) { %>
+        <p class="correct">
+          Question <%= index + 1 %>:<strong> correct</strong>
+        </p>
+        <% } else { %>
+        <p class="wrong">Question <%= index + 1 %>: <strong>wrong</strong></p>
+        <% } %> <% }) %>
+        <h3 class="totalScore">
+          <span>Your total Score is: <%= totalScore %></span>
+          <form action="/reset" method="post">
+            <button class="next" type="submit">Restart</button>
+          </form>
+        </h3>
+      </div>
+    </div>
+  </body>
+</html>

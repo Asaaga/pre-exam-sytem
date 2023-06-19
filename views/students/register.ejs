@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyTraks - Create Account</title>
+    <link rel="stylesheet" href="/css/register.css" />
+  </head>
+  <body>
+    <div class="register-container">
+      <h2>Create Account</h2>
+      <hr />
+
+      <form action="/register" method="POST">
+        <div class="input-group">
+          <label>Matric Number</label><br />
+          <input
+            type="text"
+            name="matric"
+            autocomplete="off"
+            placeholder="Enter Matric Number"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label>Fullname</label><br />
+          <input
+            type="text"
+            name="fullname"
+            autocomplete="off"
+            placeholder="Enter Fullname"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label>Email</label><br />
+          <input
+            type="email"
+            name="email"
+            placeholder="Someone@mail.com"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label>Password</label><br />
+          <input
+            type="password"
+            name="password"
+            autocomplete="off"
+            placeholder="Enter Password"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label>Confirm Password</label><br />
+          <input
+            type="password"
+            name="c_pass"
+            autocomplete="off"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+        <div class="cta">
+          <button type="submit" class="reg-button" name="create_account">
+            Create Account
+          </button>
+          <p><a href="/login">Login Here </a>If you Already Have an Account</p>
+        </div>
+      </form>
+    </div>
+
+    <script src="/js/home.js"></script>
+  </body>
+</html>

@@ -1,0 +1,382 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    transition: all 500ms ease;
+}
+
+body {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navbar */
+.navbar {
+    position: relative;
+    display: block;
+    width: 80vw;
+    left: 20%;
+    padding: 20px;
+    background: #001420;
+}
+
+.navbar .wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar .wrapper .left {
+    flex: 1;
+}
+
+.navbar .wrapper .left h2{
+    color: #ccc;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.navbar .wrapper .cta {
+    position: relative;
+    display: inline-flex;
+    flex: 2;
+    justify-content: space-evenly;
+
+}
+
+.navbar .wrapper .cta li {
+    position: relative;
+    display: block;
+    list-style: none;
+    color: #fff;
+    top: 5px;
+}
+
+/* SideBar */
+.sidebar {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    background: #001420;
+    z-index: 999;
+}
+
+.sidebar .wrapper {
+    padding: 20px;
+}
+
+.sidebar .wrapper .head {
+    position: relative;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.sidebar .wrapper .head img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.sidebar .wrapper .head h2 {
+    font-weight: 500;
+    margin-top: 15px;
+    margin-right: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sidebar .wrapper hr {
+    border: none;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    border-radius: .2em;
+    opacity: .7;
+}
+
+.sidebar .wrapper .content {
+    position: relative;
+    display: block;  
+    top: 20px;
+    padding: 10px;
+}
+
+
+.sidebar .wrapper .content li {
+    position: relative;
+    display: block;
+    list-style-type: none;
+    width: 100%;
+    margin-top: 28px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 200;
+    cursor: pointer;
+}
+
+.sidebar .wrapper .content li > .box {
+    display: none;
+    transition: all 2 ease-in-out;
+}
+
+.sidebar .wrapper .content li > .box.active {
+    position: relative;
+    display: block;
+    background: #002033;
+    top: 5px;
+    left: 5px;
+    padding: 20px;
+    border-radius: .2em;
+}
+
+.sidebar .wrapper .content li > .box span{
+    font-size: 15px;
+}
+
+.sidebar .wrapper .content li > .box span:not(:nth-child(1)) {
+    position: relative;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Container */
+
+.container {
+    position: fixed;
+    left: 20%;
+    width: 50%;
+    background: #f0f0f0;
+    overflow:  scroll;
+}
+
+.container .wrapper {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container .wrapper .card .head {
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    padding: 10px;
+}
+
+.container .wrapper .card .head h2 {
+    font-weight: 500;
+}
+
+.container .wrapper .card {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 5px;
+    padding: 25px;
+    background: #fff;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+    border-radius: .2em;
+}
+
+.container .wrapper .card input {
+    width: 90%;
+    padding: 10px;
+    background: #ccecff;
+}
+
+.container .wrapper .card input:hover {
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.container .wrapper .card textarea {
+    outline: none;
+    border: none;
+    background: #f0f0f0;
+    padding: 10px;
+    width: 90%;
+    height: 100px;
+    border-radius: .3em;
+}
+
+.container .wrapper .card button {
+    position: relative;
+    display: block;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    cursor: pointer;
+    background: #0081cb;
+    color: #fff;
+    font-size: 15px;
+}
+
+.quick-cta {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 25%;
+    padding: 10px;
+    background: #f0f0f0;
+    overflow: hidden;
+    border: 1px solid #cfa;
+}
+
+.quick-cta .head {
+    width: 100%;
+    justify-content: center;
+}
+
+.quick-cta .head h2 {
+    font-weight: 500;
+}
+
+.quick-cta hr {
+    position: relative;
+    display: inline-block;
+    height: 1px;
+}
+
+.quick-cta .card {
+    width: 50%;
+    margin-top: 10px;
+    height: 120px;
+    background: #fff;
+    border-radius: .2em;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+.quick-cta .card:hover span {
+    background: #ccc;
+}
+
+.quick-cta .card span {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #000;
+    border-radius: .2em;
+}
+
+.quick-cta .card span:nth-child(1) {
+    transform: rotate(90deg);
+    left: 65px;
+    top: 65px;
+}
+
+
+/* NavTrigger */
+.navbar .wrapper .navTrigger {
+    position: absolute;
+    display: block;
+    width: 90px;
+    background: rgb(255, 30, 0);
+    z-index: 99;
+}
+
+.navbar .wrapper .navTrigger span {
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: .2em;
+    margin-top: 3px;
+}
+
+
+.footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    justify-content: center;
+    text-align: center;
+    background: #383838da;
+    z-index: 99;
+}
+
+.footer p {
+    font-weight: 500;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* mobile responsiveness */
+
+@media only screen and (max-width: 990px) {
+    body {
+        overflow: scroll;
+    }
+
+    .navbar .wrapper ul.cta {
+        display: none;
+    }
+    .navbar .wrapper .navTrigger {
+        position: fixed;
+        display: block;
+        width: 90px;
+        background: rgb(65, 159, 3);
+        z-index: 99;
+    }
+
+    .navbar .wrapper .navTrigger span {
+        width: 100%;
+        height: 3px;
+        background: #fff;
+        border-radius: .2em;
+        margin-top: 3px;
+    }
+
+
+    .navbar .wrapper .left h2 {
+        font-size: 15px;
+    }
+
+    .navbar .wrapper .cta {
+        display: none;
+    }
+    
+    .quick-cta {
+        display: none;
+    }
+    .navbar {
+        left: 0;
+        width: 100vw;
+    }
+    .sidebar {
+        display: none;
+    }
+    .container {
+        left: 0;
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .navbar .wrapper .left h2 {
+        display: none;
+    }
+
+ 
+}

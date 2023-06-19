@@ -1,0 +1,190 @@
+* {
+    padding: 0;
+    margin: 0;
+    transition:  all 2 linear;
+}
+
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.navbar {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: #001b25;
+    color: #fff;
+}
+
+.navbar .head {
+    position: relative;
+    display: flex;
+    width: 300px;
+    padding: 20px;
+}
+
+.navbar .head h2 {
+    font-weight: 400;
+    font-size: 28px;
+}
+
+.navbar .studentCta {
+    position: absolute;
+    display: flex;
+    float: right;
+    width: 300px;
+    top: 15px;
+    right: 20px;
+    padding: 10px;
+}
+
+.navbar .studentCta li {
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+
+.navbar .studentCta li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.navbar .navTrigger {
+    position: fixed;
+    display: none;
+    width: 40px;
+    top: 25px;
+    right: 40px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.navbar .navTrigger:hover span {
+    background: #f0f0f0;
+}
+
+.navbar .navTrigger span {
+    position: relative;
+    display: block;
+    width: 100%;
+    background: #fff;
+    height: 3px;
+    margin-top: 3px;
+    border-radius: .2em;
+}
+
+
+
+
+
+/* Container */
+.container {
+    position: relative;
+    display: block;
+    top: 120px;
+    max-width: 80%;
+    background: #f0f0f0;
+    left: 10%;
+}
+
+.container .head {
+    width: 100%;
+    background: #ccc;
+    border-bottom: 1px solid #000;
+    border-radius: .5em .5em 0 0;
+}
+
+.container .head h2 {
+    padding: 10px;
+    font-weight: 400;
+
+}
+
+.container .content {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.container .content .question {
+    padding: 20px;
+    background: #f0f0f0;
+}
+
+.container .content .question h2 {
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+}
+
+.container .content .question li {
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+    background: #fffc;
+}
+
+.container .content .question li input[type='radio'] {
+    margin-left: 10px;
+}
+
+.container .content .question li label {
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.container .content .cta {
+    width: 100%;
+}
+
+.container .content .cta button[type='submit'] {
+    outline: none;
+    border: none;
+    width: 90px;
+    background: #ff8000;
+    color: #fff;
+    padding: 10px;
+    margin: 10px;
+    float: right;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE RESPONSIVENESS */
+@media only screen and (max-width: 970px) {
+    .navbar .studentCta {
+        display: none;
+    }
+
+    .navbar .navTrigger {
+        display: block;
+    }
+
+    
+    /* Container */
+    .container {
+        position: relative;
+        display: block;
+        top: 120px;
+        max-width: 100%;
+        left: 0;
+        background: #f0f0f0;
+    }
+
+}
