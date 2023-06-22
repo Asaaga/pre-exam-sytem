@@ -1,7 +1,6 @@
 <div class="sidebar" id="sidebar">
   <aside class="wrapper">
     <div class="head">
-      <img src="../public/uploads/6.png" alt="" />
       <h2>Hi, Admin</h2>
     </div>
     <hr />
@@ -9,17 +8,19 @@
       <li>Overview</li>
       <li>Students</li>
       <li id="adminBtnToggle">
-        Assignments
+        Task
         <div class="box" id="box">
-          <span>Add Assignment</span>
-          <span>Remove Assignment</span>
-        </div>
-      </li>
-      <li id="adminBtnToggle2">
-        Reviews/Remarks
-        <div class="box" id="box2">
-          <span>Add Assignment</span>
-          <span>Remove Assignment</span>
+          <span>Add Task</span>
+            <form action="/search" method="POST">
+              <select name="class" class="form-control p-1">
+                <option value="cmp101">CMP 101</option>
+                <option value="cmp102">CMP 102</option>
+                <option value="gst111">GST 111</option>
+                <option value="gst112">GST 112</option>
+              </select>
+              <button type="submit" value="Store File"class="btn w-100 text-white" style="background-color: rgb(255, 174, 0);">Query</button>
+            </form>
+          
         </div>
       </li>
     </ul>

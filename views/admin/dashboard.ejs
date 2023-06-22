@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instructor Area</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
     <link rel="stylesheet" href="/css/admin.css" />
     <link
       rel="stylesheet"
@@ -23,6 +24,7 @@
             <h2>Upload Questions</h2>
           </div>
           <form
+            id="upload"
             action="/import-excel"
             method="POST"
             enctype="multipart/form-data"
@@ -51,6 +53,20 @@
     </div>
 
     <%- include('includes/footer.ejs') %>
-    <script src="/js/admin.js"></script>
+    <script src="/js/sweetalert.js"></script>
+    <script>
+      const upload = document.getElementById('upload');
+      upload.addEventListener('submit', () => {
+        
+          swal.fire({
+            icon: 'success',
+            title: 'Uploaded Successfully',
+            didOpen: () => {
+              swal.hideLoading();
+            },
+          });
+        
+      });
+    </script>
   </body>
 </html>

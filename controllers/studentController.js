@@ -255,8 +255,12 @@ exports.getResultPage = async (req, res, next) => {
             }
           );
         });
+
+        // Update the score in the question object
+        question.score = newScore;
       }
     }
+
     res.render('students/result', {
       path: '/result',
       pageTitle: 'Score Page',
@@ -268,6 +272,7 @@ exports.getResultPage = async (req, res, next) => {
     // Handle the error appropriately
   }
 };
+
 // restart
 exports.postRestart = (req, res, next) => {
   database.query('UPDATE questions SET score = NULL WHERE score IS NOT NULL', function(error, result) {
