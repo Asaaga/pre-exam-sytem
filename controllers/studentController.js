@@ -42,6 +42,20 @@ exports.postStudentLogin = (req, res, next) => {
     res.flash('error', 'Please enter exam number!');
   }
 };
+
+exports.getDocumentation = (req, res, next) => {
+  if(req.session.loggedin) {
+    res.render('students/document', {
+      pageTitle: 'Documentation',
+      path: '/documentation',
+      isLoggedin: req.session.loggedin,
+      email: req.session.email,
+    })
+  } else {
+    res.redirect('/login');
+  }
+  
+}
 // post student log out
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
@@ -94,6 +108,8 @@ exports.postStudentRegister = (req, res, next) => {
     );
   }
 };
+
+
 // get student dashboard
 exports.getStudentDashboard = (req, res, next) => {
   if (req.session.loggedin) {
@@ -112,26 +128,30 @@ exports.getStudentDashboard = (req, res, next) => {
       if (err) {
         return err;
       }
+      const jsonData = JSON.stringify(data);
       res.render('students/dashboard', {
         pageTitle: 'Student Dashboard',
         path: '/dashboard',
         data: data,
+        jsonData:jsonData,
         page: currentPage,
         questionsPerPage: questionsPerPage,
         isLoggedin: req.session.loggedin,
         email: req.session.email,
-        score: req.session.score,
       });
     });
   } else {
     res.redirect('/login');
   }
 };
+
 // student submit
 exports.postStudentSubmit = (req, res, next) => {
   const selectedOption = req.body.selectedOption;
   const id = req.body.id;
   const buttonValue = parseInt(req.body.send);
+  
+
   // Perform any necessary validation or sanitization of the input data
   if (buttonValue === -1) {
     // Submit the final answers and update the score
@@ -211,6 +231,8 @@ exports.postStudentSubmit = (req, res, next) => {
     );
   }
 };
+
+// render the result page
 exports.getResultPage = async (req, res, next) => {
   try {
     const questions = await new Promise((resolve, reject) => {
@@ -222,6 +244,11 @@ exports.getResultPage = async (req, res, next) => {
         }
       });
     });
+
+    if (!questions || questions.length === 0) {
+      // Handle the case when there are no questions available
+      return res.status(404).send('No questions found.');
+    }
 
     let totalScore = 0;
 
@@ -239,8 +266,8 @@ exports.getResultPage = async (req, res, next) => {
         );
       });
 
-      if (question.ans === answers[0].ans) {
-        const newScore = question.score + 2;
+      if (answers.length > 0 && question.ans === answers[0].ans) {
+        const newScore = question.score + 1;
         totalScore += newScore;
 
         await new Promise((resolve, reject) => {
@@ -261,15 +288,16 @@ exports.getResultPage = async (req, res, next) => {
       }
     }
 
+    // Render the result page with the total score
     res.render('students/result', {
+      pageTitle: 'Result',
       path: '/result',
-      pageTitle: 'Score Page',
       totalScore: totalScore,
       scores: questions.map((q) => q.score),
     });
   } catch (error) {
-    console.log('Error fetching questions or updating scores:', error);
-    // Handle the error appropriately
+    console.error('Error fetching questions or updating scores:', error);
+    res.status(500).send('Internal Server Error');
   }
 };
 

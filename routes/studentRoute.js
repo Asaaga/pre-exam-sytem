@@ -11,4 +11,5 @@ router.get('/dashboard', studentController.getStudentDashboard);
 router.post('/submit', studentController.postStudentSubmit);
 router.get('/result', studentController.getResultPage);
 router.post('/reset', studentController.postRestart);
+router.get('/documentation', studentController.getDocumentation);
 module.exports = router;

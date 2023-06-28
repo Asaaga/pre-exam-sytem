@@ -32,7 +32,7 @@ body {
 }
 .totalScore {
   background-color: rgb(163, 162, 161);
-  color: green;
+  color: rgb(136, 22, 2);
   padding: 10px;
   border-top: 1px solid black;
   display: flex;
@@ -181,7 +181,15 @@ body {
   float: left;
   cursor: pointer;
 }
-
+#scores {
+  display: none;
+  visibility: hidden;
+}
+.containChart {
+  height: 300px;
+  width: 300px;
+ margin: auto;
+}
 .container .content .cta button[type='submit'] {
   outline: none;
   border: none;

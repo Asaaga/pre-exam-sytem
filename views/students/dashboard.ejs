@@ -16,10 +16,12 @@
         <li><a href="">Settings</a></li>
         <li>
           <form action="/logout" method="post">
-            <button class="logout" type="submit">Log Out</button>
+            <button class="logout" type="submit" >Log Out</button>
           </form>
         </li>
-        <li><a href="">Notifications</a></li>
+        <li>
+          <a href="/documentation">Documentation</a>
+      </li>
       </div>
       <div class="navTrigger" id="navTrigger">
         <span></span>
@@ -40,13 +42,14 @@
         </h2>
       </div>
       <div class="content">
-        <form action="/submit" method="post">
+        <form action="/submit" method="post" id="quizForm">
           <input type="hidden" name="id" value="<%= question.id %>" />
           <input type="hidden" name="email" value="<%= email %>" />
           <ul class="question">
             <h2><%= question.question %></h2>
             <li>
               <input
+                option
                 type="radio"
                 name="selectedOption"
                 id="option_a_"
@@ -56,6 +59,7 @@
             </li>
             <li>
               <input
+                option
                 type="radio"
                 name="selectedOption"
                 id="option_b_"
@@ -65,6 +69,7 @@
             </li>
             <li>
               <input
+                option
                 type="radio"
                 name="selectedOption"
                 id="option_c_"
@@ -74,6 +79,7 @@
             </li>
             <li>
               <input
+                option
                 type="radio"
                 name="selectedOption"
                 id="option_d_"
@@ -81,11 +87,19 @@
               />
               <label for="option_d_"><%= question.option_d %></label>
             </li>
+            <li>
+              <input
+                option
+                type="hidden"
+                id="answer"
+                value="<%= question.ans %>"
+              />
+            </li>
           </ul>
           <div class="cta">
             <% if (page > 1) { %>
             <!-- Show Previous button if not on the first page -->
-            <a class="next" href="/dashboard?page=<%= page - 1 %>">Previous</a>
+            <a class="next" id="prevBtn" href="/dashboard?page=<%= page - 1 %>">Previous</a>
             <% } %> <% if (page == 1) { %>
             <!-- Show Previous button if not on the first page -->
             <button type="submit" name="send" value="<%= page + 1 %>">
@@ -107,23 +121,60 @@
       </script>
       <% } %>
     </div>
-
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         var prevBtn = document.getElementById('prevBtn');
         var nextBtn = document.getElementById('nextBtn');
-        var page = `<%= page %>`; // Retrieve the current page number passed from the backend
-
+        var page = <%= page %>; // Retrieve the current page number passed from the backend
+    
         prevBtn.addEventListener('click', function () {
           page--; // Decrement the page number
           location.href = '/dashboard?page=' + page; // Redirect to the previous page
         });
-
+    
         nextBtn.addEventListener('click', function () {
           page++; // Increment the page number
-          location.href = '/student_dashboard?page=' + page; // Redirect to the next page
+          location.href = '/dashboard?page=' + page; // Redirect to the next page
         });
       });
+    
+      document.getElementById("quizForm").addEventListener('submit', () => {
+         // Prevent form submission
+    
+        const answer = document.getElementById('answer').value;
+        const options = document.querySelectorAll('[option]');
+        options.forEach(option => {
+          if (option.checked && option.value != answer) {
+            option.parentNode.style.border = '2px solid red';
+            const correctOption = document.querySelector(`input[value="${answer}"]`);
+            if (correctOption) {
+              correctOption.parentNode.style.border = '2px solid green';
+            }
+          } else if (option.checked && option.value == answer) {
+            option.parentNode.style.border = '2px solid green';
+          }
+        });
+    
+        // Check if it's the last page
+        const isLastPage = (parseInt(event.target.querySelector('button[name="send"]').value) === <%= data.length %>);
+    
+        // Redirect to the appropriate page after a delay
+        setTimeout(() => {
+          if (isLastPage) {
+            window.location.href = '/result';
+          } else {
+            const nextPage = parseInt(event.target.querySelector('button[name="send"]').value);
+            window.location.href = `/dashboard?page=${nextPage}`;
+          }
+        }, 1000); // Adjust the delay as needed
+      });
     </script>
+    
+    
+
+    </script>    
+    
+    
+
   </body>
 </html>
