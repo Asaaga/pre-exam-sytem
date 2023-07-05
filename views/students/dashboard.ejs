@@ -114,6 +114,13 @@
             <% } %>
           </div>
         </form>
+        <form action="/progress" method="post">
+          <% if (data.length != page){ %>
+            <button type="submit" style="color:blue; float: right;">
+              See Progress
+            </button>
+            <% } %>
+        </form>
       </div>
       <% } else { %>
       <script>

@@ -6,6 +6,10 @@
     <title>Document</title>
     
     <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
     body {
         background: url('/images/exam-teacher.gif');
         background-size: cover;
@@ -14,6 +18,7 @@
         overflow: auto;
         overflow-x: hidden;
     }
+
     center {
         position: absolute;
         display: block;
@@ -21,7 +26,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: #000000b4;
+        background: #4c4abdb4;
         z-index: 99;
     }
     center h3 {
@@ -34,8 +39,8 @@
         justify-content: center;
         text-align: center;
         font-weight: 500;
-        background: #000;
-        color: #fff;
+        background: #00063d;
+        color: #ff4800;
     }
     h5 {
         position: relative;
@@ -53,27 +58,37 @@
         text-decoration: none;
         z-index: 999;
     }
-
-    center .navs {
+    .content p {
+        color: red;
+    }
+    center .links{
         position: absolute;
         display: flex;
         padding: 20px;
+        top: 40%;
+        left: 45%;
+        
     }
-
+    .links a {
+        color: red;
+        text-decoration: none;
+        background-color: #00063d;
+        padding: 10px;
+    }
     </style>
 </head>
 <body>
     <h4>
-        <a href="/dashboard">Back</a>
+        <a href="/dashboard"><= Back</a>
     </h4>
     <center>
         <div class="content">
             <h3>B S U - WPESS</h3>
-            <h5>Help you to study ahead of your Gst exams</h5>
-            <p>find resources at </p>
-            <div class="navs">
-                <a href="#">Gst 111</a>
-                <a href="#">Gst 121</a>
+            <h3>Help you to study ahead of your exams</h3>
+            <h3>find resources at links below</h3>
+            <div class="links">
+                <a href="https://pcgicks.files.wordpress.com/2015/02/com-101-introduction-to-computing-theory.pdf">cmp 101</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#">Gst 121</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="#">Gst 113</a>
             </div>
         </div>

@@ -321,4 +321,25 @@ exports.postRestart = (req, res, next) => {
     }
   });
 };
+exports.postProgress = (req, res, next) => {
+  const sqlQuery = `
+    UPDATE answers AS a
+    INNER JOIN questions AS q ON a.sn = q.sn
+    SET a.score = q.score
+  `;
+  
+  database.query(sqlQuery, function(error) {
+    if (error) {
+      console.log('Error updating scores:', error);
+    } else {
+      console.log('Scores updated successfully');
+    }
+    
+    res.redirect('/result');
+  });
+};
+
+
+
+
 
