@@ -232,7 +232,6 @@ exports.postStudentSubmit = (req, res, next) => {
   }
 };
 
-// render the result page
 exports.getResultPage = async (req, res, next) => {
   try {
     const questions = await new Promise((resolve, reject) => {
@@ -255,7 +254,8 @@ exports.getResultPage = async (req, res, next) => {
     for (const question of questions) {
       const answers = await new Promise((resolve, reject) => {
         database.query(
-          `SELECT * FROM answers WHERE sn=${question.id}`,
+          'SELECT * FROM answers WHERE sn = ?',
+          [question.id],
           function (error, answers) {
             if (error) {
               reject(error);
@@ -271,16 +271,39 @@ exports.getResultPage = async (req, res, next) => {
         totalScore += newScore;
 
         await new Promise((resolve, reject) => {
-          database.query(
-            `UPDATE questions SET score = ${newScore} WHERE id = ${question.id}`,
-            function (error, result) {
-              if (error) {
-                reject(error);
-              } else {
-                resolve();
-              }
+          database.beginTransaction((err) => {
+            if (err) {
+              reject(err);
+            } else {
+              database.query(
+                'UPDATE questions SET score = ? WHERE id = ?',
+                [newScore, question.id],
+                function (error, result) {
+                  if (error) {
+                    database.rollback(() => reject(error));
+                  } else {
+                    database.query(
+                      'UPDATE answers SET score = ? WHERE sn = ?',
+                      [newScore, question.id],
+                      function (error, result) {
+                        if (error) {
+                          database.rollback(() => reject(error));
+                        } else {
+                          database.commit((err) => {
+                            if (err) {
+                              database.rollback(() => reject(err));
+                            } else {
+                              resolve();
+                            }
+                          });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
             }
-          );
+          });
         });
 
         // Update the score in the question object
@@ -322,24 +345,104 @@ exports.postRestart = (req, res, next) => {
   });
 };
 exports.postProgress = (req, res, next) => {
-  const sqlQuery = `
-    UPDATE answers AS a
-    INNER JOIN questions AS q ON a.sn = q.sn
-    SET a.score = q.score
-  `;
-  
-  database.query(sqlQuery, function(error) {
-    if (error) {
-      console.log('Error updating scores:', error);
-    } else {
-      console.log('Scores updated successfully');
-    }
     
-    res.redirect('/result');
-  });
+    res.redirect('/progress');
+  
 };
 
+exports.getProgress = async (req, res, next) => {
+  try {
+    const answers = await new Promise((resolve, reject) => {
+      database.query('SELECT * FROM answers', function (error, answers) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(answers);
+        }
+      });
+    });
 
+    if (!answers || answers.length === 0) {
+      // Handle the case when there are no answers available
+      return res.status(404).send('No answers found.');
+    }
 
+    let totalScore = 0;
+    const scores = []; // Store the scores here
+
+    for (const answer of answers) {
+      const question = await new Promise((resolve, reject) => {
+        database.query(
+          'SELECT * FROM questions WHERE id = ?',
+          [answer.sn],
+          function (error, questions) {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(questions[0]); // Assuming there is only one question per answer
+            }
+          }
+        );
+      });
+
+      if (question && question.hasOwnProperty('score') && question.ans === answer.ans) {
+        const newScore = question.score + 1;
+        totalScore += newScore;
+
+        await new Promise((resolve, reject) => {
+          database.beginTransaction((err) => {
+            if (err) {
+              reject(err);
+            } else {
+              database.query(
+                'UPDATE questions SET score = ? WHERE id = ?',
+                [newScore, question.id],
+                function (error, result) {
+                  if (error) {
+                    database.rollback(() => reject(error));
+                  } else {
+                    database.query(
+                      'UPDATE answers SET score = ? WHERE sn = ?',
+                      [newScore, answer.sn],
+                      function (error, result) {
+                        if (error) {
+                          database.rollback(() => reject(error));
+                        } else {
+                          database.commit((err) => {
+                            if (err) {
+                              database.rollback(() => reject(err));
+                            } else {
+                              resolve();
+                            }
+                          });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+          });
+        });
+
+        // Update the score in the answer object
+        answer.score = newScore;
+      }
+
+      scores.push(answer && answer.hasOwnProperty('score') ? answer.score : 0); // Add the score to the scores array
+    }
+
+    // Render the result page with the total score and scores
+    res.render('students/progress', {
+      pageTitle: 'Progress',
+      path: '/progress',
+      totalScore: totalScore,
+      scores: scores,
+    });
+  } catch (error) {
+    console.error('Error fetching answers or updating scores:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 

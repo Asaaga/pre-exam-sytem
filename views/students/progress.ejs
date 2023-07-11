@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/studentDashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="navbar" id="navbar">
+      <div class="head">
+        <a href="/dashboard"><h2>Student Dashboard</h2></a>
+      </div>
+      <div class="studentCta" id="studentCta">
+        <li><a href="">Settings</a></li>
+        <li><a href="">Progress</a></li>
+        <li><a href="">Notifications</a></li>
+      </div>
+      <div class="navTrigger" id="navTrigger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="head">
+        <h2>Your Assessment Result</h2>
+      </div>
+      <div class="content">
+        <p id="scores"><%= scores %></p>
+        <h4 class="totalScore">
+          <input type="hidden" value="<%= totalScore %>" id="total">
+          <span>You answered <%= scores.length %> questions & got <%= totalScore %> correctly</span>
+          <div class="infor"></div>
+          <form action="/reset" method="post">
+            <button class="next" type="submit">Restart</button>
+          </form>
+        </h4>
+       <div class="containChart">
+         <canvas id="chart"></canvas>
+         <div class="infor"></div>
+       </div>
+      </div>
+    </div>
+    <script>
+      // Assuming you have an array of scores like this
+      const scoreElement = document.getElementById('scores');
+      const scoresString = scoreElement.innerText;
+      const cleanedScoresString = scoresString.replace(/ /g, '0');
+      const scoresArray = cleanedScoresString.split(',');
+      const scores = scoresArray.map(score => score === "" ? 0 : parseInt(score));
+    
+      // Count the number of correct and wrong scores
+      let correctCount = 0;
+      let wrongCount = 0;
+    
+      scores.forEach((score) => {
+        if (score > 0) {
+          correctCount++;
+        } else {
+          wrongCount++;
+        }
+      });
+    
+      // Create the data for the pie chart
+      const chartData = {
+        labels: ['Correct', 'Wrong'],
+        datasets: [
+          {
+            data: [correctCount, wrongCount],
+            backgroundColor: ['#00FF00', '#FF0000'],
+          },
+        ],
+      };
+    
+      // Render the pie chart
+      const ctx = document.getElementById('chart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: chartData,
+      });
+    </script>
+    <script>
+      const total = document.getElementById("total").value;
+      if(parseInt(total) < 5) {
+        const p = document.createElement('p');
+        p.innerHTML = `<small>Your performance is below average please follow the link to study more before practice..<small><a href='/documentation' style='color: blue;'>yourgstmaterial</a>`
+        document.querySelector('.infor').appendChild(p)
+      }
+    </script>
+  </body>
+</html>

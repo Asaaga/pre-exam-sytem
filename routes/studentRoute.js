@@ -13,4 +13,5 @@ router.get('/result', studentController.getResultPage);
 router.post('/reset', studentController.postRestart);
 router.get('/documentation', studentController.getDocumentation);
 router.post('/progress', studentController.postProgress);
+router.get('/progress', studentController.getProgress);
 module.exports = router;
